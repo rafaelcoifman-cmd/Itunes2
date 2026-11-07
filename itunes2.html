@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="inputBox" type="text">
+    <button onclick="searchSongs()">search</button>
+    <script>
+        async function searchSongs(){
+           
+            var input = document.getElementById("inputBox").value.toLowerCase()
+            console.log(input)
+            var response = await fetch("https://itunes.apple.com/search?term=" + input)
+            var jsonResponse = await response.json() 
+         
+            console.log(jsonResponse)
+            for(i=0;i < jsonResponse["results"].length;i=i+1){
+                var lowerCase = jsonResponse["results"][i]["artistName"].toLowerCase()
+                if(input == lowerCase){
+                    console.log(jsonResponse["results"][i])
+                }
+            }
+            
+        }
+
+        
+    </script>
+</body>
+</html>
+
+<!-- Our aim - 
+ 1. Search any musician and see their songs and hear them, a link they can click to see their profile.
+ 2. the background color behind should be changing every 5 seconds.
+ 3. The last time u visited this website.
+ 4. Filter music on the basis of various categories so that we can discover music.
+-->
