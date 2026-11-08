@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        img{
+            height: 300px;
+            width: 300px;
+        }
+        .musicCard{
+            border-radius: 5px;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 10px;
+            background-color: lightgrey;
+        }
+    </style>
 </head>
 <body>
     <input id="inputBox" type="text">
@@ -21,8 +34,47 @@
                 var lowerCase = jsonResponse["results"][i]["artistName"].toLowerCase()
                 if(input == lowerCase){
                     console.log(jsonResponse["results"][i])
+                    var name = document.createElement("b")
+                    var br = document.createElement("br")
+                    var artist = document.createElement("b")
+                    var genre = document.createElement("p")
+                    var date = document.createElement("p")
+                    var artwork = document.createElement("img")
+                    var container = document.createElement("a")
+                    var source = document.createElement("button")
+                    var div = document.createElement("div")
+
+                    name.innerHTML = jsonResponse["results"][i]["trackName"]
+                    artist.innerHTML = jsonResponse["results"][i]["artistName"]
+                    genre.innerHTML = jsonResponse["results"][i]["primaryGenreName"]
+                    date.innerHTML = new Date(jsonResponse["results"][i]["releaseDate"])
+                    artwork.setAttribute("src", jsonResponse["results"][i]["artworkUrl100"])
+                    source.innerHTML = "go to source"
+                    container.setAttribute("href", jsonResponse["results"][i]["trackViewUrl"])
+                    container.appendChild(source)
+                    div.appendChild(name)
+                    div.appendChild(br)
+                    div.appendChild(artist)
+                    div.appendChild(genre)
+                    div.appendChild(date)
+                    div.appendChild(artwork)
+                    div.appendChild(container)
+                    div.setAttribute("class", "musicCard")
+                    document.body.appendChild(div)
                 }
+                
             }
+            if(jsonResponse["results"].length == 0){
+                    
+                    var text = document.createElement("b")
+                    var div = document.createElement("div")
+
+                    text.innerHTML = "No results found!"
+                    div.appendChild(text)
+                    div.setAttribute("class", "musicCard")
+
+                    document.body.appendChild(div)
+                }
             
         }
 
@@ -30,6 +82,7 @@
     </script>
 </body>
 </html>
+<!-- card information: artistName, artworkUrl100, primaryGenreName, releaseDate, trackViewUrl, trackName -->
 
 <!-- Our aim - 
  1. Search any musician and see their songs and hear them, a link they can click to see their profile.
